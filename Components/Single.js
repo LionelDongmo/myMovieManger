@@ -1,14 +1,41 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Share, Alert, Platform, ImageBackground} from 'react-native'
-import { color } from 'react-native-reanimated'
 import { COLORS, icons, SIZES} from '../constants'
 import {StarIcon, SingleBarIcon} from './Icons'
 import HyperLink from './HyperLink'
+import {connect} from 'react-redux'
 
-export default class Single extends Component {
+class Single extends Component {
     constructor(props){
         super(props)
         this.film =  this.props.route.params.film
+        this.toggleFavorite = this._toggleFavorite.bind(this)
+    }
+
+    _toggleFavorite() {
+        const action = { type: "TOGGLE_FAVORITE", value: this.film }
+        this.props.dispatch(action)
+    }
+
+    _displayFavoriteImage() {
+        var sourceImage = icons.add_favorite
+        var color = COLORS.white
+        //var shouldEnlarge = false // Par défaut, si le film n'est pas en favoris, on veut qu'au clic sur le bouton, celui-ci s'agrandisse => shouldEnlarge à true
+        if (this.props.favoritesFilm.findIndex(item => item.id === this.film.id) !== -1) {
+          sourceImage = icons.is_favorite
+          color = COLORS.primary 
+          //shouldEnlarge = true // Si le film est dans les favoris, on veut qu'au clic sur le bouton, celui-ci se rétrécisse => shouldEnlarge à false
+        }
+        return (
+            <SingleBarIcon icon={sourceImage} width={20} height={20} color={color} />
+         /*<EnlargeShrink
+            shouldEnlarge={shouldEnlarge}>
+            <Image
+              style={styles.favorite_image}
+              source={sourceImage}
+            />
+         </EnlargeShrink>*/
+        )
     }
 
     infoFilmLabel(label, value){
@@ -23,6 +50,7 @@ export default class Single extends Component {
             return null
         }
     }
+
     infoFilm(value){
         if(value !== ''){
             return(
@@ -34,6 +62,7 @@ export default class Single extends Component {
             return null
         }
     }
+
     infoFilmNote(){
         if(this.film.postMeta.note !== ''){
            return(
@@ -74,8 +103,8 @@ export default class Single extends Component {
                     <SingleBarIcon icon={icons.left_arrow} />
                 </TouchableOpacity>
                 {/** favoris */}
-                <TouchableOpacity style={[styles.header_item, styles.isFavorite]} onPress={()=> {}}>
-                    <SingleBarIcon icon={icons.add_favorite} width={25} height={25} />
+                <TouchableOpacity style={[styles.header_item, styles.isFavorite]} onPress={this.toggleFavorite}>
+                    {this._displayFavoriteImage()}
                 </TouchableOpacity>
                 {/** share */}
                 <TouchableOpacity style={[styles.header_item, styles.share]} onPress={()=> {}}>
@@ -93,24 +122,7 @@ export default class Single extends Component {
         )
     }
 
-    renderHeaderBar(){
-        return(
-            <View style={styles.heade_bar}>
-                {/** Back button */}
-                <TouchableOpacity style={[styles.header_item, styles.back]} onPress={()=> this.props.navigation.goBack()}>
-                    <SingleBarIcon icon={icons.left_arrow} />
-                </TouchableOpacity>
-                {/** favoris */}
-                <TouchableOpacity style={[styles.header_item, styles.isFavorite]} onPress={()=> {}}>
-                    <SingleBarIcon icon={icons.add_favorite} width={25} height={25} />
-                </TouchableOpacity>
-                {/** share */}
-                <TouchableOpacity style={[styles.header_item, styles.share]} onPress={()=> {}}>
-                    <SingleBarIcon icon={Platform.OS === 'ios' ? icons.upload: icons.share} />
-                </TouchableOpacity>
-            </View>
-        )
-    }
+   
     renderHeaderSection(){
         const image = { uri: this.film.imageUrl}
         return(
@@ -164,18 +176,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: Platform.OS === 'ios'? 40 : 20,
+        paddingTop: Platform.OS === 'ios'? 40 : 20,
+        paddingBottom: 5,
         paddingHorizontal: SIZES.padding,
         position: 'absolute',
-        zIndex: 999 
+        zIndex: 999,
+        backgroundColor: COLORS.transparentPrimary
     },
     header_item:{
         alignItems: 'center',
         justifyContent: 'center',
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 30,
         borderRadius: 20,
-        backgroundColor: COLORS.transparentBlack,
+        backgroundColor: COLORS.background2,
     },
    
     main_content: {
@@ -188,7 +202,8 @@ const styles = StyleSheet.create({
        paddingTop: SIZES.height/1.45
     },
     info_content:{
-        backgroundColor: COLORS.background1,
+        //backgroundColor: COLORS.background1,
+        backgroundColor: COLORS.transparentBackground,
         paddingHorizontal: 10,
         paddingBottom: 30
     },
@@ -227,5 +242,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10
     }
-  });
-  
+});
+
+const mapStateToProps = (state) =>{
+    return {
+        favoritesFilm: state.favoritesFilm
+    }
+} 
+export default connect(mapStateToProps)(Single)

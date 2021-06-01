@@ -11,6 +11,8 @@ console.log(response.headers.get('X-WP-Total'))
 linear-gradient -> npm install react-native-linear-gradient --save 
 import LinearGradient from 'react-native-linear-gradient'
 
+redux -> npm install --save redux
+         npm install --save react-redux
 
 <LinearGradient 
     start={{x:0, y: 0 }}

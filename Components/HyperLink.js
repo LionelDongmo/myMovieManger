@@ -43,7 +43,7 @@ export default class HyperLink extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#acacac',
+    color: COLORS.gray,
     fontWeight: 'bold',
     paddingHorizontal: 10,
     paddingVertical: 8,

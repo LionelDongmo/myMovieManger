@@ -3,22 +3,17 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { COLORS, icons, SIZES} from '../constants'
-import {StarIcon} from './Icons'
+import {StarIcon, SingleBarIcon} from './Icons'
 //import FadeIn from '../Animations/FadeIn'
 
 class FilmItem extends React.Component {
 
-  /*_displayFavoriteImage() {
+  _displayFavoriteImage() {
     if (this.props.isFilmFavorite) {
       // Si la props isFilmFavorite vaut true, on affiche le 🖤
-      return (
-        <Image
-          style={styles.favorite_image}
-          source={require('../Images/ic_favorite.png')}
-        />
-      )
+      return <SingleBarIcon icon={icons.is_favorite} width={20} height={20} color={COLORS.primary} />
     }
-  } */
+  } 
 
   render() {
     const { film, displayDetailForFilm } = this.props
@@ -36,7 +31,6 @@ class FilmItem extends React.Component {
           <View style={styles.content_container}>
             <View style={styles.header_container}>
               <Text style={styles.title_text}>{film.title.rendered}</Text>
-              {/*this._displayFavoriteImage()*/}
             </View>
             <View style={styles.description_container}>
               <Text style={styles.description_text} numberOfLines={5}>{film.postMeta.description}</Text>
@@ -47,6 +41,7 @@ class FilmItem extends React.Component {
                 <Text style={{color: COLORS.white}}> {film.postMeta.note} </Text>
               </View> 
               <Text style={styles.lang_text}> French </Text>
+              {this._displayFavoriteImage()}
             </View>
           </View>
         </TouchableOpacity>

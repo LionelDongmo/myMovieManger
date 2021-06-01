@@ -67,7 +67,7 @@ export const StarIcon = ({icon}) => {
         />
     ) 
 }
-export const SingleBarIcon = ({icon, width=20, height=20, color=COLORS.white}) => {
+export const SingleBarIcon = ({icon, width=15, height=15, color=COLORS.white}) => {
     return(
         <Image
             source ={icon}

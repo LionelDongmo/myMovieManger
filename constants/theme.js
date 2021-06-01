@@ -9,11 +9,13 @@ export const COLORS = {
     white: "#fff",
     black: "#000000",
     blue: "#4096FE",
-    gray: "#464646",
+    gray: "#acacac",
     gray1: "#363636",
     lightGray: "#dedede",
     transparentWhite: 'rgba(255, 255, 255, 0.2)',
     transparentBlack: 'rgba(0, 0, 0, 0.4)',
+    transparentPrimary: 'rgba(255, 0, 46, 0.5)',
+    transparentBackground: 'rgba(6, 8, 24, 0.8)',
 };
 export const SIZES = {
     // global sizes
