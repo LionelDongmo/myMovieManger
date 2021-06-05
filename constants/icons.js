@@ -11,7 +11,8 @@ const upload = require("../assets/icons/upload.png");
 const loader = require("../assets/icons/load.gif");
 const share = require('../assets/icons/share-iconA.png');
 const add_favorite = require('../assets/icons/add_favoris.png');
-const is_favorite = require('../assets/icons/favorite-red.png')
+const is_favorite = require('../assets/icons/favorite-red.png');
+const avatar = require('../assets/icons/Avatar.png');
 
 export default {
     airplay,
@@ -28,4 +29,5 @@ export default {
     share,
     add_favorite,
     is_favorite,
+    avatar
 }

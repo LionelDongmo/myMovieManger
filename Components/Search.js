@@ -1,9 +1,10 @@
 import React from 'react';
-import {TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {TextInput, View, StyleSheet, TouchableOpacity, LogBox} from 'react-native';
 import { uriSearchedText } from '../API/DRLmoviApi'
 import FilmList from './FilmList'
-import { COLORS,  icons } from "../constants"
+import { COLORS,  icons, SIZES } from "../constants"
 import { SearchIcon, LoaderIcon } from "./Icons"
+import TranslateY from '../Animations/TranslateY'
 
 
 class Search extends React.Component {
@@ -19,8 +20,12 @@ class Search extends React.Component {
         this.totalPages = 0
         this.onPressFindMovie = this._searchFilms.bind(this)
         this.loadFilms = this._loadFilms.bind(this)
+        this.initialPosition = SIZES.height/2-30
     }
 
+    componentDidMount(){
+      //LogBox.ignoreLogs(['Animated: `useNativeDriver`'])
+    }
     _loadFilms() {
       if (this.searchedText.length > 0) {
         this.setState({ isLoading: true })
@@ -47,6 +52,7 @@ class Search extends React.Component {
     _searchFilms() {
       this.page = 0
       this.totalPages = 0
+      this.initialPosition = 0
       this.setState({
         films: [],
       }, () => {
@@ -74,17 +80,19 @@ class Search extends React.Component {
   render() {
     return (
       <View style={styles.mainContent}>
-        <View style={styles.searchBar}>
-          <TextInput  
-            style={styles.textInput} 
-            placeholder="Titre du film"
-            onChangeText={(text) => this._searchTextInputChanged(text)}
-            onSubmitEditing={this.onPressFindMovie}
-          /> 
-          <TouchableOpacity style={styles.touchable} onPress={this.onPressFindMovie}  >
-            <SearchIcon icon={icons.search} />
-          </TouchableOpacity> 
-        </View>
+        <TranslateY initialPosition = {this.initialPosition}>
+          <View style={styles.searchBar}>
+            <TextInput  
+              style={styles.textInput} 
+              placeholder="Titre du film"
+              onChangeText={(text) => this._searchTextInputChanged(text)}
+              onSubmitEditing={this.onPressFindMovie}
+            /> 
+            <TouchableOpacity style={styles.touchable} onPress={this.onPressFindMovie}  >
+              <SearchIcon icon={icons.search} />
+            </TouchableOpacity> 
+          </View>
+        </TranslateY>
         <FilmList
           films={this.state.films}
           navigation={this.props.navigation}
@@ -103,13 +111,12 @@ const styles = StyleSheet.create({
     mainContent : {
         flex : 1,
         backgroundColor: COLORS.background1,
-        paddingBottom: 37
+        paddingBottom: 37,
+        marginTop: 40
     },
     searchBar:{
       flexDirection: 'row',
-      marginTop: 20,
-      marginRight: 10,
-      marginLeft: 10
+      //marginTop: null,
     },
     textInput: {
       flex: 5,

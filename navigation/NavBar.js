@@ -2,10 +2,11 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
-//import { Search } from "../screens"
 import { COLORS, icons } from "../constants"
+import Home from '../Components/Home';
 import Search from "../Components/Search";
 import Single from "../Components/Single";
+import Favorites from '../Components/Favorites';
 import {TabIcon} from "../Components/Icons"
 
 const Tab = createBottomTabNavigator()
@@ -29,8 +30,8 @@ const Tabs = () => {
             }}
         >
             <Tab.Screen
-                name="Recherche"
-                component={Search}
+                name="Home"
+                component={Home}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
@@ -41,25 +42,25 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Play"
-                component={Search}
-                options={{
-                    tabBarIcon: ({ focused }) => (
-                        <TabIcon
-                            focused={focused}
-                            icon={icons.play_button}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="Search"
+                name="Recherche"
                 component={Search}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
                             icon={icons.search}
+                        />
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="Favorites"
+                component={Favorites}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <TabIcon
+                            focused={focused}
+                            icon={icons.is_favorite}
                         />
                     )
                 }}
@@ -91,11 +92,19 @@ const NavBar = () => {
             headerShown: false,
         }}
 
-        initialRouteName={'Recherche'}
+        initialRouteName={'Home'}
       >
         <Stack.Screen
-          name="Recherche"
+          name="Home"
           component={Tabs}
+        />
+         <Stack.Screen
+          name="Search"
+          component={Search}
+        />
+         <Stack.Screen
+          name="Favorites"
+          component={Favorites}
         />
         <Stack.Screen
           name="Film"

@@ -4,12 +4,18 @@ import React from 'react';
 import {Provider} from 'react-redux'
 import NavBar from './navigation/NavBar'
 import Store from './Store/configureStore'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+//import { PersistGate } from 'redux-persist/es/integration/react'
 
 export default function App() {
+  let persistor = persistStore(Store)
   return (
     <Provider store={Store} >
-      <NavBar />
-      <StatusBar style="auto" />
+      <PersistGate loading={null} persistor={persistor}>
+        <NavBar />
+        <StatusBar style="auto" />
+      </PersistGate>
     </Provider>
   );
 }

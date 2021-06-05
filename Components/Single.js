@@ -10,6 +10,7 @@ class Single extends Component {
         super(props)
         this.film =  this.props.route.params.film
         this.toggleFavorite = this._toggleFavorite.bind(this)
+        this.shareFilm = this._shareFilm.bind(this)
     }
 
     _toggleFavorite() {
@@ -36,6 +37,10 @@ class Single extends Component {
             />
          </EnlargeShrink>*/
         )
+    }
+
+    _shareFilm(){
+        Share.share({ title: this.film.title.rendered, message: this.film.postMeta.url })
     }
 
     infoFilmLabel(label, value){
@@ -79,9 +84,9 @@ class Single extends Component {
     subHeaderYeasLang(){
         return(
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 10}} >
-                {this.infoFilm(this.film.postMeta.dateSortie)}
+                {this.infoFilm(this.film.postMeta.year)}
                 {this.infoFilmNote()}
-                {this.infoFilm("FRENCH")}
+                {this.infoFilm(this.film.postMeta.language)}
             </View>
         )
     }
@@ -107,7 +112,7 @@ class Single extends Component {
                     {this._displayFavoriteImage()}
                 </TouchableOpacity>
                 {/** share */}
-                <TouchableOpacity style={[styles.header_item, styles.share]} onPress={()=> {}}>
+                <TouchableOpacity style={[styles.header_item, styles.share]} onPress={this.shareFilm}>
                     <SingleBarIcon icon={Platform.OS === 'ios' ? icons.upload: icons.share} />
                 </TouchableOpacity>
             </View>
@@ -165,7 +170,7 @@ class Single extends Component {
 const styles = StyleSheet.create({
     header: {
         position: 'absolute',
-        top: 0,
+        top: 40,
         width: "100%",
         height: SIZES.height
     },
@@ -176,12 +181,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: Platform.OS === 'ios'? 40 : 20,
         paddingBottom: 5,
+        paddingTop: 40,
         paddingHorizontal: SIZES.padding,
         position: 'absolute',
         zIndex: 999,
-        backgroundColor: COLORS.transparentPrimary
+        backgroundColor: COLORS.primary
     },
     header_item:{
         alignItems: 'center',
@@ -247,6 +252,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) =>{
     return {
         favoritesFilm: state.favoritesFilm
+        //favoritesFilm: state.toggleFavorite.favoritesFilm
     }
 } 
 export default connect(mapStateToProps)(Single)

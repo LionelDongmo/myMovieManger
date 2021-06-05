@@ -1,0 +1,20 @@
+all movie
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie?_fields=id,date,excerpt,title,link,imageUrl,taxonomies,postMeta&per_page=' + per_page + '&page=' + page +'&search=' + text
+
+movie select by post_meta
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie?meta_key=_movie_release_date&meta_value=2020&_fields=id,date,excerpt,title,link,imageUrl,taxonomies,postMeta
+
+  _is_popular_movie
+  /wp-json/wp/v2/movie?meta_key=_is_popular_movie&meta_value=yes&_fields=id,date,excerpt,title,link,imageUrl,taxonomies,postMeta
+
+all movie taxonomies
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie_genre?_fields=id,count,name
+
+movie per taxonomies id
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie?movie_genre=59
+
+all movie tag
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie_tag?_fields=id,count,name
+
+movie per tag id
+https://api.drl-dev.com/wpmovie/wp-json/wp/v2/movie?movie_tag=57

@@ -1,6 +1,6 @@
 // Store/Reducers/avatarReducer.js
-
-const initialState = { avatar: require('../../Images/ic_tag_faces.png') }
+import {icons} from '../../constants'
+const initialState = { avatar: icons.avatar}
 
 function setAvatar(state = initialState, action) {
   let nextState

@@ -22,3 +22,9 @@ redux -> npm install --save redux
 >
 
 </LinearGradient>
+
+ImagePiker -> npm add react-native-image-picker
+
+redux-persit -> npm install --save redux-persist
+
+npm install --save @react-native-community/async-storage

@@ -14,7 +14,7 @@ export const TabIcon = ({ focused, icon }) => {
                 style={{
                     width: 15,
                     height: 15,
-                    tintColor: focused ? COLORS.white : COLORS.gray
+                    tintColor: focused ? COLORS.primary : COLORS.gray
                 }}
             />
         </View>
